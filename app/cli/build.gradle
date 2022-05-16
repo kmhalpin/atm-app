@@ -1,0 +1,14 @@
+plugins {
+    id 'com.atm.app.java-application-conventions'
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':usecase')
+    implementation project(':db')
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'com.atm.app.cli.App'
+}

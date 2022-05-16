@@ -1,0 +1,10 @@
+plugins {
+    id 'com.atm.app.java-library-conventions'
+}
+
+dependencies {
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.5'
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    implementation project(':domain')
+    implementation project(':common')
+}

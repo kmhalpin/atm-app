@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.atm.app.java-application-conventions'
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':usecase')
+    implementation project(':db')
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'com.atm.app.gui.App'
+}
+
+shadowJar {
+    archiveBaseName.set('atm-app')
+    manifest {
+        attributes (
+            'Main-Class': 'com.atm.app.gui.App',
+            'Description': 'This is an application JAR'
+        )
+    }
+}
