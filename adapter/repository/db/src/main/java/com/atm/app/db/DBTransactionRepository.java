@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.atm.app.common.exception.NotFoundError;
 import com.atm.app.domain.entity.Transaction;
 
 public class DBTransactionRepository implements com.atm.app.domain.repository.TransactionRepository {
@@ -33,7 +34,7 @@ public class DBTransactionRepository implements com.atm.app.domain.repository.Tr
   private String getByIDQuery = "SELECT * FROM transaction WHERE id = ?";
 
   @Override
-  public Transaction getByID(int id) {
+  public Transaction getByID(int id) throws Exception {
     ResultSet rsSet = null;
     try (Connection conn = DB.getConnection();
         PreparedStatement pStatement = conn.prepareStatement(getByIDQuery);) {
@@ -47,8 +48,10 @@ public class DBTransactionRepository implements com.atm.app.domain.repository.Tr
             rsSet.getString("account_to"),
             rsSet.getBigDecimal("balance").longValue(),
             rsSet.getString("type"),
-            rsSet.getTimestamp("created_at").getNanos(),
-            rsSet.getTimestamp("updated_at").getNanos());
+            rsSet.getTimestamp("created_at").getTime(),
+            rsSet.getTimestamp("updated_at").getTime());
+      else
+        throw new NotFoundError("Transaction not found");
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -76,8 +79,8 @@ public class DBTransactionRepository implements com.atm.app.domain.repository.Tr
             rsSet.getString("account_to"),
             rsSet.getBigDecimal("balance").longValue(),
             rsSet.getString("type"),
-            rsSet.getTimestamp("created_at").getNanos(),
-            rsSet.getTimestamp("updated_at").getNanos()));
+            rsSet.getTimestamp("created_at").getTime(),
+            rsSet.getTimestamp("updated_at").getTime()));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block
@@ -104,8 +107,8 @@ public class DBTransactionRepository implements com.atm.app.domain.repository.Tr
             rsSet.getString("account_to"),
             rsSet.getBigDecimal("balance").longValue(),
             rsSet.getString("type"),
-            rsSet.getTimestamp("created_at").getNanos(),
-            rsSet.getTimestamp("updated_at").getNanos()));
+            rsSet.getTimestamp("created_at").getTime(),
+            rsSet.getTimestamp("updated_at").getTime()));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block

@@ -11,5 +11,5 @@ public interface TransactionRepository {
 
   List<Transaction> findByAccount(String account);
 
-  Transaction getByID(int id);
+  Transaction getByID(int id) throws Exception;
 }

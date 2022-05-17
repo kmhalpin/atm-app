@@ -55,6 +55,10 @@ public class TransactionUsecase {
     t.setBalance(balance);
     t.setType(TransactionType.TRANSFER);
 
+    if(accountFrom.equals(accountTo)){
+      throw new Exception("TRANSACTION.TRANSFER.SAME_ACCOUNT");
+    }
+
     synchronized (LOCK) {
       User userTo = this.uRepository.getByAccountNumber(accountTo);
       User userFrom = this.uRepository.getByAccountNumber(accountFrom);

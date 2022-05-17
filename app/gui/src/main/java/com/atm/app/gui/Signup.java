@@ -4,9 +4,6 @@
  */
 package com.atm.app.gui;
 
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-
 import com.atm.app.usecase.UserUsecase;
 import com.atm.app.domain.entity.User;
 
@@ -17,8 +14,6 @@ import com.atm.app.domain.entity.User;
 public class Signup extends javax.swing.JPanel {
     AppContext ctx;
     UserUsecase uUsecase;
-    String account, name;
-    int pin;
 
     /**
      * Creates new form Signup
@@ -64,13 +59,6 @@ public class Signup extends javax.swing.JPanel {
 
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
 
-        jTextField1.addCaretListener(new CaretListener() {
-                @Override
-                public void caretUpdate(CaretEvent e) {
-                        jTextField1ActionPerformed();
-                }
-        });
-
         jLabel5.setText("ATZ Bank");
 
         jButton1.setBackground(new java.awt.Color(0, 153, 51));
@@ -91,24 +79,10 @@ public class Signup extends javax.swing.JPanel {
 
         jTextField5.setForeground(new java.awt.Color(51, 51, 51));
 
-        jTextField5.addCaretListener(new CaretListener() {
-                @Override
-                public void caretUpdate(CaretEvent e) {
-                        jTextField5ActionPerformed();
-                }
-        });
-
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("PIN");
 
         jTextField6.setForeground(new java.awt.Color(51, 51, 51));
-
-        jTextField6.addCaretListener(new CaretListener() {
-                @Override
-                public void caretUpdate(CaretEvent e) {
-                        jTextField6ActionPerformed();
-                }
-        });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel13.setText("Nama");
@@ -195,9 +169,10 @@ public class Signup extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         try {
             User u = new User();
-            u.setAccountNumber(this.account);
-            u.setSecurityPin(this.pin);
-            u.setName(this.name);
+            int pin = Integer.parseInt(jTextField5.getText());
+            u.setAccountNumber(jTextField1.getText());
+            u.setSecurityPin(pin);
+            u.setName(jTextField6.getText());
             u.setBalance(0);
             this.uUsecase.register(u);
         } catch (Exception e) {
@@ -205,24 +180,6 @@ public class Signup extends javax.swing.JPanel {
         }
         this.ctx.movePage(Page.LOGIN);
     }// GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField1ActionPerformed() {// GEN-FIRST:event_jTextField4ActionPerformed
-        this.account = jTextField1.getText();
-    }// GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField5ActionPerformed() {// GEN-FIRST:event_jTextField5ActionPerformed
-        int pin = 0;
-        try {
-                pin = Integer.parseInt(jTextField5.getText());
-        } catch (NumberFormatException e) {
-
-        }
-        this.pin = pin;
-    }// GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jTextField6ActionPerformed() {// GEN-FIRST:event_jTextField6ActionPerformed
-        this.name = jTextField6.getText();
-    }// GEN-LAST:event_jTextField6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

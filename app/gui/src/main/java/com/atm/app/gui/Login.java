@@ -4,8 +4,6 @@
  */
 package com.atm.app.gui;
 
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,8 +16,6 @@ import com.atm.app.usecase.UserUsecase;
 public class Login extends javax.swing.JPanel {
         AppContext ctx;
         UserUsecase uUsecase;
-        String account;
-        int pin;
 
         /**
          * Creates new form Login
@@ -77,20 +73,6 @@ public class Login extends javax.swing.JPanel {
                 jLabel2.addMouseListener(new MouseInputAdapter() {
                         public void mouseClicked(MouseEvent e) {
                                 jLabel2ActionPerformed();
-                        }
-                });
-
-                jTextField1.addCaretListener(new CaretListener() {
-                        @Override
-                        public void caretUpdate(CaretEvent e) {
-                                jTextField1ActionPerformed();
-                        }
-                });
-
-                jPasswordField1.addCaretListener(new CaretListener() {
-                        @Override
-                        public void caretUpdate(CaretEvent e) {
-                                jPasswordField1ActionPerformed();
                         }
                 });
 
@@ -227,9 +209,10 @@ public class Login extends javax.swing.JPanel {
         }// </editor-fold>//GEN-END:initComponents
 
         private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-                String account = this.account;
+                String account = jTextField1.getText();
                 try {
-                        this.uUsecase.login(account, this.pin);
+                        int pin = Integer.parseInt(new String(jPasswordField1.getPassword()));
+                        this.uUsecase.login(account, pin);
                 } catch (Exception e) {
                         return;
                 }
@@ -240,20 +223,6 @@ public class Login extends javax.swing.JPanel {
         private void jLabel2ActionPerformed() {// GEN-FIRST:event_jButton1ActionPerformed
                 this.ctx.movePage(Page.SIGNUP);
         }// GEN-LAST:event_jButton1ActionPerformed
-
-        private void jTextField1ActionPerformed() {// GEN-FIRST:event_jTextField1ActionPerformed
-                this.account = jTextField1.getText();
-        }// GEN-LAST:event_jTextField1ActionPerformed
-
-        private void jPasswordField1ActionPerformed() {// GEN-FIRST:event_jPasswordField1ActionPerformed
-                int pin = 0;
-                try {
-                        pin = Integer.parseInt(new String(jPasswordField1.getPassword()));
-                } catch (NumberFormatException e) {
-
-                }
-                this.pin = pin;
-        }// GEN-LAST:event_jPasswordField1ActionPerformed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButton1;

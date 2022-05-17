@@ -3,6 +3,9 @@ package com.atm.app.gui;
 import com.atm.app.usecase.*;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import java.awt.Component;
 
 import com.atm.app.db.*;
 import com.atm.app.domain.repository.*;
@@ -20,6 +23,17 @@ enum Page {
 }
 
 public class App extends javax.swing.JFrame implements AppContext {
+    JPanel withdraw,
+            transfer,
+            signup,
+            menuTransaction,
+            login,
+            history,
+            deposit,
+            balance,
+            account;
+    javax.swing.GroupLayout layout;
+
     TransactionUsecase tUsecase;
     UserUsecase uUsecase;
     String authAccount;
@@ -31,6 +45,17 @@ public class App extends javax.swing.JFrame implements AppContext {
         this.tUsecase = new TransactionUsecase(tRepository, uRepository);
         this.uUsecase = new UserUsecase(uRepository);
 
+        withdraw = new Withdraw(this, this.tUsecase, this.uUsecase);
+        transfer = new Transfer(this, this.tUsecase);
+        signup = new Signup(this, this.uUsecase);
+        menuTransaction = new MenuTransaction(this);
+        login = new Login(this, this.uUsecase);
+        history = new History(this, this.tUsecase, this.uUsecase);
+        deposit = new Deposit(this, this.tUsecase);
+        balance = new Balance(this, this.uUsecase);
+        account = new Account(this);
+        layout = new javax.swing.GroupLayout(getContentPane());
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         movePage(Page.LOGIN);
@@ -41,7 +66,6 @@ public class App extends javax.swing.JFrame implements AppContext {
 
     private void changePanel(JPanel jPanel1) {
         getContentPane().removeAll();
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -53,7 +77,16 @@ public class App extends javax.swing.JFrame implements AppContext {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+        for (Component control : jPanel1.getComponents()) {
+            if (control instanceof JTextField) {
+                JTextField ctrl = (JTextField) control;
+                ctrl.setText("");
+            }
+        }
         update(getGraphics());
+        if (jPanel1 instanceof UpdateablePanel) {
+            ((UpdateablePanel) jPanel1).updatePanel();
+        }
     }
 
     public static void main(String[] args) {
@@ -93,12 +126,12 @@ public class App extends javax.swing.JFrame implements AppContext {
     }
 
     @Override
-    public void setAuth(String account){
+    public void setAuth(String account) {
         this.authAccount = account;
     }
 
     @Override
-    public String getAuth(){
+    public String getAuth() {
         return this.authAccount;
     }
 
@@ -106,31 +139,31 @@ public class App extends javax.swing.JFrame implements AppContext {
     public void movePage(Page page) {
         switch (page) {
             case ACCOUNT:
-                changePanel(new Account(this));
+                changePanel(account);
                 return;
             case BALANCE:
-                changePanel(new Balance(this, this.uUsecase));
+                changePanel(balance);
                 return;
             case DEPOSIT:
-                changePanel(new Deposit(this, this.tUsecase));
+                changePanel(deposit);
                 return;
             case HISTORY:
-                changePanel(new History(this, this.tUsecase));
+                changePanel(history);
                 return;
             case LOGIN:
-                changePanel(new Login(this, this.uUsecase));
+                changePanel(login);
                 return;
             case MENUTRANSACTION:
-                changePanel(new MenuTransaction(this));
+                changePanel(menuTransaction);
                 return;
             case SIGNUP:
-                changePanel(new Signup(this, this.uUsecase));
+                changePanel(signup);
                 return;
             case TRANSFER:
-                changePanel(new Transfer(this, this.tUsecase));
+                changePanel(transfer);
                 return;
             case WITHDRAW:
-                changePanel(new Withdraw(this, this.tUsecase));
+                changePanel(withdraw);
                 return;
         }
     }

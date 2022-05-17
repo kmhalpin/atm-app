@@ -5,8 +5,6 @@
 package com.atm.app.gui;
 
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 
 import java.awt.event.MouseEvent;
 
@@ -19,7 +17,6 @@ import com.atm.app.usecase.TransactionUsecase;
 public class Deposit extends javax.swing.JPanel {
     AppContext ctx;
     TransactionUsecase tUsecase;
-    long balance;
 
     /**
      * Creates new form Deposit
@@ -60,12 +57,6 @@ public class Deposit extends javax.swing.JPanel {
         jLabel3.setText("Ammount");
 
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                jTextField1ActionPerformed();
-            }
-        });
 
         jButton1.setBackground(new java.awt.Color(0, 153, 51));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -158,20 +149,11 @@ public class Deposit extends javax.swing.JPanel {
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed() {// GEN-FIRST:event_jTextField1ActionPerformed
-        long balance = 0;
-        try {
-            balance = Long.parseLong(jTextField1.getText());
-        } catch (NumberFormatException e) {
-
-        }
-        this.balance = balance;
-    }// GEN-LAST:event_jTextField1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         String account = this.ctx.getAuth();
         try {
-            this.tUsecase.Deposit(account, this.balance);
+            long balance = Long.parseLong(jTextField1.getText());
+            this.tUsecase.Deposit(account, balance);
         } catch (Exception e) {
             return;
         }

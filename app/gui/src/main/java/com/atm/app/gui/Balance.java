@@ -13,10 +13,9 @@ import com.atm.app.usecase.UserUsecase;
  *
  * @author admin
  */
-public class Balance extends javax.swing.JPanel {
+public class Balance extends javax.swing.JPanel implements UpdateablePanel {
     AppContext ctx;
     UserUsecase uUsecase;
-    long balance;
 
     /**
      * Creates new form Balance
@@ -24,11 +23,6 @@ public class Balance extends javax.swing.JPanel {
     public Balance(AppContext ctx, UserUsecase uUsecase) {
         this.ctx = ctx;
         this.uUsecase = uUsecase;
-        try {
-            this.balance = this.uUsecase.getAccount(ctx.getAuth()).getBalance();
-        } catch (Exception e) {
-            ctx.movePage(Page.LOGIN);
-        }
         initComponents();
     }
 
@@ -85,10 +79,10 @@ public class Balance extends javax.swing.JPanel {
         jLabel6.setText("Your Balance");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText(":" + this.ctx.getAuth());
+        jLabel7.setText(":");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText(":" + this.balance);
+        jLabel8.setText(":");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 51));
@@ -173,4 +167,16 @@ public class Balance extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void updatePanel() {
+        try {
+            long balance = this.uUsecase.getAccount(ctx.getAuth()).getBalance();
+            jLabel8.setText(":" + balance);
+            jLabel7.setText(":" + this.ctx.getAuth());
+        } catch (Exception e) {
+            ctx.movePage(Page.LOGIN);
+            return;
+        }
+    }
 }

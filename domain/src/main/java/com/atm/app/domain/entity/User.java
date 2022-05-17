@@ -8,8 +8,8 @@ public class User {
   private int securityPin;
   private String name;
   private long balance;
-  private int createdAt;
-  private int updatedAt;
+  private long createdAt;
+  private long updatedAt;
 
   public User() {
   }
@@ -19,8 +19,8 @@ public class User {
       int securityPin,
       String name,
       long balance,
-      int createdAt,
-      int updatedAt) {
+      long createdAt,
+      long updatedAt) {
     this.accountNumber = accountNumber;
     this.securityPin = securityPin;
     this.name = name;
@@ -61,19 +61,19 @@ public class User {
     this.balance = balance;
   }
 
-  public int getCreatedAt() {
+  public long getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(int createdAt) {
+  public void setCreatedAt(long createdAt) {
     this.createdAt = createdAt;
   }
 
-  public int getUpdatedAt() {
+  public long getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(int updatedAt) {
+  public void setUpdatedAt(long updatedAt) {
     this.updatedAt = updatedAt;
   }
 }

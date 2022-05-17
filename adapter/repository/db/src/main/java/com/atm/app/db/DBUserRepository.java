@@ -43,8 +43,8 @@ public class DBUserRepository implements com.atm.app.domain.repository.UserRepos
             rsSet.getInt("security_pin"),
             rsSet.getString("name"),
             rsSet.getBigDecimal("balance").longValue(),
-            rsSet.getTimestamp("created_at").getNanos(),
-            rsSet.getTimestamp("updated_at").getNanos()));
+            rsSet.getTimestamp("created_at").getTime(),
+            rsSet.getTimestamp("updated_at").getTime()));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block
@@ -69,8 +69,8 @@ public class DBUserRepository implements com.atm.app.domain.repository.UserRepos
             rsSet.getInt("security_pin"),
             rsSet.getString("name"),
             rsSet.getBigDecimal("balance").longValue(),
-            rsSet.getTimestamp("created_at").getNanos(),
-            rsSet.getTimestamp("updated_at").getNanos());
+            rsSet.getTimestamp("created_at").getTime(),
+            rsSet.getTimestamp("updated_at").getTime());
       else
           throw new NotFoundError("Account not found");
     } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class DBUserRepository implements com.atm.app.domain.repository.UserRepos
     return null;
   }
 
-  private String updateBalanceQuery = "UPDATE account SET balance = ? WHERE account_number = ?";
+  private String updateBalanceQuery = "UPDATE account SET balance = ?, updated_at = CURRENT_TIMESTAMP WHERE account_number = ?";
 
   @Override
   public void updateBalance(String aNumber, long balance) {

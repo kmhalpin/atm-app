@@ -6,8 +6,8 @@ public class Transaction {
   String accountTo;
   long balance;
   TransactionType type;
-  int createdAt;
-  int updatedAt;
+  long createdAt;
+  long updatedAt;
 
   public Transaction(){};
 
@@ -17,8 +17,8 @@ public class Transaction {
       String accountTo,
       long balance,
       String type,
-      int createdAt,
-      int updatedAt) {
+      long createdAt,
+      long updatedAt) {
     this.id = id;
     this.accountFrom = accountFrom;
     this.accountTo = accountTo;
@@ -68,19 +68,19 @@ public class Transaction {
     this.type = type;
   }
 
-  public int getCreatedAt() {
+  public long getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(int createdAt) {
+  public void setCreatedAt(long createdAt) {
     this.createdAt = createdAt;
   }
 
-  public int getUpdatedAt() {
+  public long getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(int updatedAt) {
+  public void setUpdatedAt(long updatedAt) {
     this.updatedAt = updatedAt;
   }
 

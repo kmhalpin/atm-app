@@ -8,9 +8,6 @@ import javax.swing.event.MouseInputAdapter;
 
 import com.atm.app.usecase.TransactionUsecase;
 
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-
 import java.awt.event.MouseEvent;
 
 /**
@@ -20,8 +17,6 @@ import java.awt.event.MouseEvent;
 public class Transfer extends javax.swing.JPanel {
     AppContext ctx;
     TransactionUsecase tUsecase;
-    long balance;
-    String account;
 
     /**
      * Creates new form Deposit
@@ -63,12 +58,6 @@ public class Transfer extends javax.swing.JPanel {
         jLabel3.setText("Amount");
 
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                jTextField1ActionPerformed();
-            }
-        });
 
         jButton1.setBackground(new java.awt.Color(0, 153, 51));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -112,12 +101,6 @@ public class Transfer extends javax.swing.JPanel {
         jLabel6.setText("Account Number To");
 
         jTextField2.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField2.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                jTextField2ActionPerformed();
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,24 +162,12 @@ public class Transfer extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed() {// GEN-FIRST:event_jTextField1ActionPerformed
-        long balance = 0;
-        try {
-            balance = Long.parseLong(jTextField1.getText());
-        } catch (NumberFormatException e) {
-
-        }
-        this.balance = balance;
-    }// GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed() {// GEN-FIRST:event_jTextField2ActionPerformed
-        this.account = jTextField2.getText();
-    }// GEN-LAST:event_jTextField2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String account = this.ctx.getAuth();
         try {
-            this.tUsecase.Transfer(account, this.account, this.balance);
+            long balance = Long.parseLong(jTextField1.getText());
+            String toAccount = jTextField2.getText();
+            this.tUsecase.Transfer(account, toAccount, balance);
         } catch (Exception e) {
             return;
         }
